@@ -3,10 +3,13 @@
 </head>
 <body>
 	<h1>Leaderboard</h1>
-	<p>{{>leaderboard}}</p>
+	{{>leaderboard}}
 </body>
 
 <template name="leaderboard">
-	{{player}}
-	{{score}}
+	<ul>
+		{{#each player}}
+			<li>{{name}}: {{score}}</li>
+		{{/each}}
+	</ul>
 </template>

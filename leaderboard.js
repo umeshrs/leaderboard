@@ -5,10 +5,7 @@ console.log("Hello world!");
 if (Meteor.isClient) {
 	Template.leaderboard.helpers({
 		'player': function() {
-			return "This is the player helper function";
-		},
-		'score': function() {
-			return "This is the score helper function."
+			return PlayerList.find();
 		}
 	});
 }
