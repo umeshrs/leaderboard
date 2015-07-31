@@ -1,5 +1,9 @@
 /* CSS declarations go here */
 
+li.player {
+	cursor: pointer;
+}
+
 .selected {
 	background-color: yellow;
 }
