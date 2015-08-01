@@ -3,7 +3,8 @@ PlayerList = new Mongo.Collection('players');
 if (Meteor.isClient) {
 	Template.leaderboard.helpers({
 		'player': function() {
-			return PlayerList.find({}, {sort: {score: -1, name: 1} });
+			var currentUserId = Meteor.userId();
+			return PlayerList.find({createdBy: currentUserId}, {sort: {score: -1, name: 1} });
 		},
 		'selectedClass': function() {
 			var playerId = this._id;
@@ -38,12 +39,14 @@ if (Meteor.isClient) {
 	});
 
 	Template.addPlayerForm.events({
-		'submit': function() {
+		'submit form': function() {
 			event.preventDefault();
 			var playerNameVar = event.target.playerName.value;
+			var currentUserId = Meteor.userId();
 			PlayerList.insert({
 				name: playerNameVar,
-				score: 0
+				score: 0,
+				createdBy: currentUserId
 			});
 			event.target.playerName.value = "";
 		}
@@ -51,5 +54,5 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
-	console.log("Hello Server!");
+	// console.log("Hello Server!");
 }
