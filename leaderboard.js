@@ -1,10 +1,13 @@
 PlayerList = new Mongo.Collection('players');
 
 if (Meteor.isClient) {
+
+	Meteor.subscribe('thePlayers');
+
 	Template.leaderboard.helpers({
 		'player': function() {
 			var currentUserId = Meteor.userId();
-			return PlayerList.find({createdBy: currentUserId}, {sort: {score: -1, name: 1} });
+			return PlayerList.find({}, {sort: {score: -1, name: 1} });
 		},
 		'selectedClass': function() {
 			var playerId = this._id;
@@ -54,5 +57,8 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
-	// console.log("Hello Server!");
+	Meteor.publish('thePlayers', function() {
+		var currentUserId = this.userId;
+		return PlayerList.find({createdBy: currentUserId});
+	});
 }
